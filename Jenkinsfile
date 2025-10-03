@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SNYK_TOKEN = credentials('snyk-token')
-        DOCKER_CREDS = credentials('dockerhub-creds')
+        DOCKERHUB_CREDS = credentials('dockerhub-creds')
     }
 
     stages {
@@ -50,9 +50,9 @@ pipeline {
             steps {
                 echo "Push image to Docker Hub"
                 sh '''
-                  echo ${DOCKER_CREDS.password} | docker login -u ${DOCKER_CREDS.username} --password-stdin
-                  docker tag node-app:latest ${DOCKER_CREDS.username}/node-app:latest
-                  docker push ${DOCKER_CREDS.username}/node-app:latest
+                  echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
+                  docker tag node-app:latest $DOCKERHUB_CREDS_USR/node-app:latest
+                  docker push $DOCKERHUB_CREDS_USR/node-app:latest
                 '''
             }
         }

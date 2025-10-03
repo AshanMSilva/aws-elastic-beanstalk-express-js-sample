@@ -50,9 +50,9 @@ pipeline {
             steps {
                 echo "Push image to Docker Hub"
                 sh '''
-                  echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
-                  docker tag node-app:latest $DOCKERHUB_CREDS_USR/node-app:latest
-                  docker push $DOCKERHUB_CREDS_USR/node-app:latest
+                  echo ${DOCKER_CREDS.password} | docker login -u ${DOCKER_CREDS.username} --password-stdin
+                  docker tag node-app:latest ${DOCKER_CREDS.username}/node-app:latest
+                  docker push ${DOCKER_CREDS.username}/node-app:latest
                 '''
             }
         }
